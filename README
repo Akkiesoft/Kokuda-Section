@@ -35,6 +35,22 @@ XOOPSの書式は使用できません。
 □その他
 ・引き継ぎを実行すると、Kokuda Sectionにある既存のデータはすべて破棄されます
 
+インポート後、次の手順を実行することにより、
+XF-SECTIONを置き換えられると思います。
+実行前にはXOOPSやデータベースのバックアップを行っておくと良いでしょう。
+
+(1)XF-SECTIONおよびKokuda Sectionを無効化する
+(2)XF-SECTIONのディレクトリを適当にリネームし、
+　 Kokuda Sectionをxfsectionにリネームする
+ $ cd /path/to/xoops/modules/
+ $ mv xfsection xfsection_original
+ $mv kokudasection xfsection
+(3)Kokuda Sectionのxoops_version.phpをエディタで開き
+　 以下の行をxfsectionに書き換える
+ (-)12: $modversion['dirname'] = "kokudasection";
+ (+)12: $modversion['dirname'] = "xfsection";
+(4)Kokuda Sectionを再度有効化する。
+
 
 ■ライセンス
 とりあえずMIT Licenseでどうぞ。
