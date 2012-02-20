@@ -1,0 +1,8 @@
+Options -Indexes
+IndexIgnore *
+<Files ~ "^\.(htaccess|htpasswd)$">
+  deny from all
+</Files>
+<Files ~ "\.(dat|xml)$">
+  deny from all
+</Files>
