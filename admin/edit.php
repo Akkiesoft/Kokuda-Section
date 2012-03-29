@@ -1,6 +1,5 @@
 <?php
 include 'common.php';
-include '../../include/cp_header.php';
 
 if (isset($_POST['save'])) {
 	$id = intval($_POST['save']);
@@ -59,6 +58,8 @@ $id = intval($_GET['id']);
 if ($id == 0) {
 	/* New */
 	$titleLabel = '新規記事の作成';
+	$title = '';
+	$dat   = '';
 } else {
 	$path    = $modulepath.'/data/'.$id.'.dat';
 	if (!file_exists($path)) {

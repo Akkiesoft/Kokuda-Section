@@ -1,6 +1,5 @@
 <?php
 include 'common.php';
-include '../../include/cp_header.php';
 
 if (isset($_POST['delete'])) {
 	$id = intval($_POST['delete']);

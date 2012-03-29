@@ -2,6 +2,7 @@
 include '../xoops_version.php';
 include '../../../mainfile.php';
 include '../../../include/cp_header.php';
+mb_internal_encoding('UTF-8');
 
 $modulepath = XOOPS_ROOT_PATH.'/modules/'.$modversion['dirname'];
 
