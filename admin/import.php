@@ -3,15 +3,14 @@ include 'common.php';
 
 if (isset($_POST['import'])) {
 	/* インポート前のdatファイルの掃除 */
-	foreach($xml->article as $item) {
-		if (intval($item->isDeleted)) { continue; }
-		$id = intval($item->id);
+	foreach($json as $item) {
+		if (intval($item['isDeleted'])) { continue; }
+		$id = intval($item['id']);
 		unlink($modulepath.'/data/'.$id.'.dat');
 	}
 
 	/* インポート処理 */
-	$xmlTemplate = '<articles></articles>';
-	$xml = simplexml_load_string($xmlTemplate);
+	$json = array();
 	$report = '';
 
 	$xoopsDB =& Database::getInstance();
@@ -23,11 +22,12 @@ if (isset($_POST['import'])) {
 		$body = mb_convert_encoding($body, 'UTF-8', 'EUC-JP');
 	
 		/* ここにXMLを保存する処理 */
-		$newarticle = $xml->addChild('article');
-		$newarticle->addChild('id',$id);
-		$newarticle->addChild('title',$title);
-		$newarticle->addChild('isDeleted','0');
-		file_put_contents($xmlpath, $xml->asXML());
+		$json[] = array(
+			'id'=>$id,
+			'title'=>$title,
+			'isDeleted'=>'0'
+		);
+		file_put_contents($jsonpath, json_encode($json));
 
 		/* データ */
 		$path = $modulepath.'/data/'.$id.'.dat';

@@ -6,7 +6,7 @@ $out = <<<EOM
 <p>このモジュールは、はげしくシンプルな記事編集モジュールです。</p>
 <p><a href="edit.php?id=0">記事を新規作成する</a></p>
 EOM;
-if ($xml) {
+if ($json) {
 	$out .= <<<EOM
 <table border="1">
 	<tr>
@@ -15,10 +15,10 @@ if ($xml) {
 	  <th colspan="3">メニュー</th>
 	</tr>
 EOM;
-	foreach ($xml as $item) {
-		$id    = intval($item->id);
-		$title = htmlspecialchars($item->title);
-		$deleted = intval($item->isDeleted);
+	foreach ($json as $item) {
+		$id    = intval($item['id']);
+		$title = htmlspecialchars($item['title']);
+		$deleted = intval($item['isDeleted']);
 		if ($deleted) { continue; }
 
 		$out .= <<<EOM

@@ -7,27 +7,27 @@ if (isset($_POST['save'])) {
 	$body = mb_convert_encoding($_POST['abody'], 'UTF-8', 'EUC-JP');
 
 	if ($id == 0) {
-		$id = 0;
-		foreach($xml as $item){
-			$j = intval($item->id);
+		foreach($json as $item){
+			$j = intval($item['id']);
 			if ($id < $j) {
-				$id = $item->id;
+				$id = $item['id'];
 			}
 		}
 		$id += 1;
-		$newarticle = $xml->addChild('article');
-		$newarticle->addChild('id',$id);
-		$newarticle->addChild('title',$title);
-		$newarticle->addChild('isDeleted','0');
-		file_put_contents($xmlpath, $xml->asXML());
+		$json[] = array(
+			'id'=>$id,
+			'title'=>$title,
+			'isDeleted'=>'0'
+		);
+		file_put_contents($jsonpath, json_encode($json));
 	} else {
 		// 元の記事の情報を取得
-		$arrayno = getArrayNofromXML($xml, $id);
-		$mototitle = $xml->article[$arrayno]->title;
+		$arrayno = getArrayNofromJSON($json, $id);
+		$mototitle = $json[$arrayno]['title'];
 		if ($mottitle != $title) {
 			// 記事名が書き換わった
-			$xml->article[$arrayno]->title = $title;
-			file_put_contents($xmlpath, $xml->asXML());
+			$json[$arrayno]['title'] = $title;
+			file_put_contents($jsonpath, json_encode($json));
 		}
 	}
 
@@ -72,11 +72,11 @@ if ($id == 0) {
 		xoops_cp_footer();
 	}
 	$dat   = htmlspecialchars(file_get_contents($path));
-	$arrayno = getArrayNofromXML($xml, $id);
-	$info  = $xml->article[$arrayno];
-	$title = htmlspecialchars($info->title);
+	$arrayno = getArrayNofromJSON($json, $id);
+	$info  = $json[$arrayno];
+	$title = htmlspecialchars($info['title']);
 	$titleLabel = $title.' の編集';
-	$readable = $info->readable;
+	$readable = $info['readable'];
 }
 $out = <<<EOM
 <a href="./">&lt;&nbsp;一覧に戻る</a><br>

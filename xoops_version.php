@@ -1,6 +1,6 @@
 <?php
 $modversion['name'] = 'Kokuda Section';
-$modversion['version'] = 0.1;
+$modversion['version'] = 0.2;
 $modversion['description'] = 'Too Simple Article System';
 $modversion['author'] = "Kokuda";
 $modversion['credits'] = "Kokuda";

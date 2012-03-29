@@ -19,24 +19,24 @@ if (!is_writable($modulepath.'/data')) {
 	exit;
 }
 
-// XMLは全部で使うので先に読む
-$xmlpath = $modulepath.'/data/list.xml';
-if (is_writable($xmlpath)) {
-	$xml = simplexml_load_file($xmlpath);
+// JSONは全部で使うので先に読む
+$jsonpath = $modulepath.'/data/list.json';
+if (is_writable($jsonpath)) {
+	$json = json_decode(file_get_contents($jsonpath), TRUE);
 } else {
-	if (file_exists($xmlpath)) {
+	if (file_exists($jsonpath)) {
 		xoops_cp_header();
-		print mb_convert_encoding('<h1>エラー</h1><p>list.xmlに書き込み権限がありません。</p>', 'EUC-JP');
+		print mb_convert_encoding('<h1>エラー</h1><p>list.jsonに書き込み権限がありません。</p>', 'EUC-JP');
 		xoops_cp_footer();
 		exit;
 	}
-	$xml = simplexml_load_string('<articles></articles>');
+	$json = '';
 }
 
-function getArrayNofromXML($xml, $id){
+function getArrayNofromJSON($json, $id){
 	$cnt=0;
-	foreach($xml as $item){
-		if ($item->id == $id) {
+	foreach($json as $item){
+		if ($item['id'] == $id) {
 			return $cnt;
 		}
 		$cnt++;

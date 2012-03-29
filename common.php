@@ -5,11 +5,11 @@ mb_internal_encoding('UTF-8');
 
 $modulepath = XOOPS_ROOT_PATH.'/modules/'.$modversion['dirname'];
 
-// XMLは全部で使うので先に読む
-$xmlpath = $modulepath.'/data/list.xml';
-if (file_exists($xmlpath)) {
-	$xml = simplexml_load_file($xmlpath);
+// JSONは全部で使うので先に読む
+$jsonpath = $modulepath.'/data/list.json';
+if (file_exists($jsonpath)) {
+	$json = json_decode(file_get_contents($jsonpath), TRUE);
 } else {
-	$xml = Null;
+	$json = Null;
 }
 ?>

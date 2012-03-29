@@ -5,11 +5,11 @@ if (isset($_POST['delete'])) {
 	$id = intval($_POST['delete']);
 
 	// XMLを更新
-	$arrayno = getArrayNofromXML($xml, $id);
-	$title = htmlspecialchars($xml->article[$arrayno]->title);
-	$xml->article[$arrayno]->title = '';
-	$xml->article[$arrayno]->isDeleted = '1';
-	file_put_contents($xmlpath, $xml->asXML());
+	$arrayno = getArrayNofromJSON($json, $id);
+	$title = htmlspecialchars($json[$arrayno]['title']);
+	$json[$arrayno]['title'] = '';
+	$json[$arrayno]['isDeleted'] = '1';
+	file_put_contents($jsonpath, json_encode($json));
 
 	// データを削除
 	$path = $modulepath.'/data/'.$id.'.dat';
@@ -35,9 +35,9 @@ if (!file_exists($path)) {
 	header('Location:./');
 	exit;
 }
-$arrayno = getArrayNofromXML($xml, $id);
-$info  = $xml->article[$arrayno];
-$title = htmlspecialchars($info->title);
+$arrayno = getArrayNofromJSON($json, $id);
+$info  = $json[$arrayno];
+$title = htmlspecialchars($info['title']);
 $out = <<<EOM
 <a href="./">&lt;&nbsp;一覧に戻る</a><br>
 <h1>{$title} の削除</h1>
